@@ -3,7 +3,7 @@ name: Code Analysis and Deploy
 on:
   push:
     branches:
-      - '3.x'
+      - 'main'
 
 jobs:
   analyze-code:
