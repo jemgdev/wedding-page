@@ -45,7 +45,7 @@ export const progress = (() => {
         }
 
         loaded += 1;
-        info.innerText = `Loading ${type} ${skip ? 'skipped' : 'complete'} ${showInformation()}`;
+        info.innerText = `Cargando ${type} ${skip ? 'omitido' : 'completado'} ${showInformation()}`;
         bar.style.width = Math.min((loaded / total) * 100, 100).toString() + '%';
 
         if (loaded === total) {
@@ -62,7 +62,7 @@ export const progress = (() => {
         if (valid && !isDone) {
             valid = false;
             bar.style.backgroundColor = 'red';
-            info.innerText = `Error loading ${type} ${showInformation()}`;
+            info.innerText = `Error cargando ${type} ${showInformation()}`;
             document.dispatchEvent(new Event('undangan.progress.invalid'));
         }
     };
