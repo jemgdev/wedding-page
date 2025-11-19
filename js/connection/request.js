@@ -333,7 +333,7 @@ export const request = (method, path) => {
                 }
 
                 alert(err.message ?? String(err));
-                throw err;
+                // throw err;
             });
         },
         /**

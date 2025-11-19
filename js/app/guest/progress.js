@@ -12,7 +12,7 @@ export const progress = (() => {
 
     let total = 0;
     let loaded = 0;
-    let valid = true;
+    const valid = true;
     let isDone = false;
 
     /**
@@ -59,12 +59,14 @@ export const progress = (() => {
      * @returns {void}
      */
     const invalid = (type) => {
-        if (valid && !isDone) {
-            valid = false;
-            bar.style.backgroundColor = 'red';
-            info.innerText = `Error cargando ${type} ${showInformation()}`;
-            document.dispatchEvent(new Event('undangan.progress.invalid'));
-        }
+        // if (valid && !isDone) {
+        //     valid = false;
+        //     bar.style.backgroundColor = 'red';
+        //     info.innerText = `Error cargando ${type} ${showInformation()}`;
+        //     document.dispatchEvent(new Event('undangan.progress.invalid'));
+        // }
+
+        document.dispatchEvent(new Event('undangan.progress.done'));
     };
 
     /**
