@@ -1,4 +1,5 @@
 import { video } from './video.js';
+import { image } from './image.js';
 import { audio } from './audio.js';
 import { progress } from './progress.js';
 import { util } from '../../common/util.js';
@@ -324,6 +325,7 @@ export const guest = (() => {
         information = storage('information');
 
         const vid = video.init();
+        const img = image.init();
         const aud = audio.init();
         const lib = loaderLibs();
         const token = document.body.getAttribute('data-key');
@@ -332,12 +334,16 @@ export const guest = (() => {
         window.addEventListener('resize', util.debounce(slide));
         document.addEventListener('undangan.progress.done', () => booting());
         document.addEventListener('hide.bs.modal', () => document.activeElement?.blur());
+        document.getElementById('button-modal-download').addEventListener('click', (e) => {
+            img.download(e.currentTarget.getAttribute('data-src'));
+        });
 
         if (!token || token.length <= 0) {
             document.getElementById('comment')?.remove();
             document.querySelector('a.nav-link[href="#comment"]')?.closest('li.nav-item')?.remove();
 
             vid.load();
+            img.load();
             aud.load();
             lib.load({ confetti: document.body.getAttribute('data-confetti') === 'true' });
         }
@@ -348,10 +354,19 @@ export const guest = (() => {
             progress.add();
             progress.add();
 
+            // if don't have data-src.
+            if (!img.hasDataSrc()) {
+                img.load();
+            }
+
             // fetch after document is loaded.
             const load = () => session.guest(params.get('k') ?? token).then(({ data }) => {
                 document.dispatchEvent(new Event('undangan.session'));
                 progress.complete('config');
+
+                if (img.hasDataSrc()) {
+                    img.load();
+                }
 
                 vid.load();
                 aud.load();
