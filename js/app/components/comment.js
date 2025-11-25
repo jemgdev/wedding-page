@@ -77,7 +77,9 @@ export const comment = (() => {
       like.removeListener(u);
     });
 
-    console.log(`/api/v2/comment?per=${pagination.getPer()}&next=${pagination.getNext()}&lang=${lang.getLanguage()}`);
+    console.log(
+      `/api/v2/comment?per=${pagination.getPer()}&next=${pagination.getNext()}&lang=${lang.getLanguage()}`
+    );
 
     const data = {
       data: {
@@ -90,215 +92,78 @@ export const comment = (() => {
             comment: "Tez",
             created_at: "4 hari yang lalu.",
             like_count: 0,
-            comments: [],
           },
           {
-            uuid: "3caad11f-5961-47ac-bbae-1f02afece1c1",
+            uuid: "3caad11f-5961-47ac-bbae-1f02afece1c2",
             name: "Ws",
             presence: true,
             comment: "Good",
-            is_admin: false,
-            gif_url: null,
             created_at: "5 hari yang lalu.",
-            is_parent: true,
             like_count: 3,
-            comments: [],
           },
           {
-            uuid: "0f4619fa-8005-4ef2-9fa0-d3e173fcadd0",
-            name: "test",
+            uuid: "3caad11f-5961-47ac-bbae-1f02afece1c3",
+            name: "Ws",
             presence: true,
-            comment: "good",
-            is_admin: false,
-            gif_url: null,
+            comment: "Good",
             created_at: "5 hari yang lalu.",
-            is_parent: true,
-            like_count: 2,
-            comments: [],
+            like_count: 3,
           },
           {
-            uuid: "ea1d7881-bbd3-43fa-a325-5b39332ef86d",
-            name: "jajan",
+            uuid: "3caad11f-5961-47ac-bbae-1f02afece1c3",
+            name: "Ws",
             presence: true,
-            comment: "pih",
-            is_admin: false,
-            gif_url: null,
+            comment: "Good",
             created_at: "5 hari yang lalu.",
-            is_parent: true,
-            like_count: 2,
-            comments: [],
+            like_count: 3,
           },
           {
-            uuid: "ea1d7881-bbd3-43fa-a325-5b39332ef86d",
-            name: "jajan",
+            uuid: "3caad11f-5961-47ac-bbae-1f02afece1c3",
+            name: "Ws",
             presence: true,
-            comment: "pih",
-            is_admin: false,
-            gif_url: null,
+            comment: "Good",
             created_at: "5 hari yang lalu.",
-            is_parent: true,
-            like_count: 2,
-            comments: [],
+            like_count: 3,
           },
           {
-            uuid: "ea1d7881-bbd3-43fa-a325-5b39332ef86d",
-            name: "jajan",
+            uuid: "3caad11f-5961-47ac-bbae-1f02afece1c3",
+            name: "Ws",
             presence: true,
-            comment: "pih",
-            is_admin: false,
-            gif_url: null,
+            comment: "Good",
             created_at: "5 hari yang lalu.",
-            is_parent: true,
-            like_count: 2,
-            comments: [],
+            like_count: 3,
           },
           {
-            uuid: "ea1d7881-bbd3-43fa-a325-5b39332ef86d",
-            name: "jajan",
+            uuid: "3caad11f-5961-47ac-bbae-1f02afece1c3",
+            name: "Ws",
             presence: true,
-            comment: "pih",
-            is_admin: false,
-            gif_url: null,
+            comment: "Good",
             created_at: "5 hari yang lalu.",
-            is_parent: true,
-            like_count: 2,
-            comments: [],
+            like_count: 3,
           },
           {
-            uuid: "e681e46b-9957-4865-b48c-c5c6a57fc79f",
-            name: "Abi",
+            uuid: "3caad11f-5961-47ac-bbae-1f02afece1c3",
+            name: "Ws",
             presence: true,
-            comment: "Me gusta la pucxis, noche de puchaina",
-            is_admin: false,
-            gif_url: null,
+            comment: "Good",
             created_at: "5 hari yang lalu.",
-            is_parent: true,
-            like_count: 1,
-            comments: [
-              {
-                uuid: "a0c08358-f534-4d59-8f55-add86625f90f",
-                name: "Abi",
-                presence: true,
-                comment: "A mi tambien me gusta el penesito ",
-                is_admin: false,
-                gif_url: null,
-                created_at: "5 hari yang lalu.",
-                is_parent: false,
-                like_count: 0,
-                comments: [
-                  {
-                    uuid: "2e27a75c-2bfc-427b-bea9-4370dcbdaef2",
-                    name: "Abi",
-                    presence: true,
-                    comment: "iwal",
-                    is_admin: false,
-                    gif_url: null,
-                    created_at: "5 hari yang lalu.",
-                    is_parent: false,
-                    like_count: 0,
-                    comments: [],
-                  },
-                ],
-              },
-            ],
+            like_count: 3,
           },
           {
-            uuid: "0ae5c44c-7609-48fa-a92e-b58a52cc926f",
-            name: "oiuyt",
-            presence: false,
-            comment: "oiuytr",
-            is_admin: false,
-            gif_url: null,
-            created_at: "6 hari yang lalu.",
-            is_parent: true,
-            like_count: 1,
-            comments: [],
-          },
-          {
-            uuid: "b38c205b-60f5-4f89-ad65-89f733cec53c",
-            name: "Josue",
+            uuid: "3caad11f-5961-47ac-bbae-1f02afece1c3",
+            name: "Ws",
             presence: true,
-            comment: "Hola, gracias por invitarme",
-            is_admin: false,
-            gif_url: null,
-            created_at: "6 hari yang lalu.",
-            is_parent: true,
-            like_count: 0,
-            comments: [],
+            comment: "Good",
+            created_at: "5 hari yang lalu.",
+            like_count: 3,
           },
           {
-            uuid: "083986f8-b706-4f02-bb22-9dc91c4e8dd7",
-            name: "Teman teman semua",
+            uuid: "3caad11f-5961-47ac-bbae-1f02afece1c3",
+            name: "Ws",
             presence: true,
-            comment: "Tes",
-            is_admin: false,
-            gif_url: null,
-            created_at: "6 hari yang lalu.",
-            is_parent: true,
-            like_count: 1,
-            comments: [
-              {
-                uuid: "9dad3e12-1eaa-4628-aa76-2457a1147bd7",
-                name: "Teman teman semua",
-                presence: true,
-                comment: "Hola",
-                is_admin: false,
-                gif_url: null,
-                created_at: "6 hari yang lalu.",
-                is_parent: false,
-                like_count: 1,
-                comments: [],
-              },
-              {
-                uuid: "0e561664-44d5-4af1-b948-dc4c799bd821",
-                name: "Josue",
-                presence: true,
-                comment: "Callate no te quiero ver en la boda",
-                is_admin: false,
-                gif_url: null,
-                created_at: "6 hari yang lalu.",
-                is_parent: false,
-                like_count: 0,
-                comments: [
-                  {
-                    uuid: "63aa6caa-909c-46f0-8cb0-78d9b90833b3",
-                    name: "Josue",
-                    presence: true,
-                    comment: "no",
-                    is_admin: false,
-                    gif_url: null,
-                    created_at: "6 hari yang lalu.",
-                    is_parent: false,
-                    like_count: 0,
-                    comments: [],
-                  },
-                ],
-              },
-            ],
-          },
-          {
-            uuid: "139140a9-d02e-429d-9b7b-39844a4dc787",
-            name: "Ali Mulyanto",
-            presence: true,
-            comment: "ytt",
-            is_admin: false,
-            gif_url: null,
-            created_at: "6 hari yang lalu.",
-            is_parent: true,
-            like_count: 1,
-            comments: [],
-          },
-          {
-            uuid: "76e6d06a-12cc-4f32-a7f5-46f1dc3b7190",
-            name: "said",
-            presence: true,
-            comment: "poiuytrew",
-            is_admin: false,
-            gif_url: null,
-            created_at: "6 hari yang lalu.",
-            is_parent: true,
-            like_count: 0,
-            comments: [],
+            comment: "Good",
+            created_at: "5 hari yang lalu.",
+            like_count: 3,
           },
         ],
       },
@@ -308,27 +173,12 @@ export const comment = (() => {
     const render = async (res) => {
       pagination.setTotal(res.data.count);
       comments.setAttribute("data-loading", "false");
-
-      const flatten = (ii) =>
-          ii.flatMap((i) => [i.uuid, ...flatten(i.comments)]);
-      lastRender.splice(0, lastRender.length, ...flatten(res.data.lists));
-
-      let data = await card.renderContentMany(res.data.lists);
-      if (res.data.lists.length < pagination.getPer()) {
-          data += onNullComment();
-      }
+      comments.dispatchEvent(new Event("undangan.comment.result"));
+      const data = await card.renderContentMany(res.data.lists);
 
       util.safeInnerHTML(comments, data);
 
-      lastRender.forEach((u) => {
-        like.addListener(u);
-      });
-
-      comments.dispatchEvent(new Event('undangan.comment.result'));
-
-      
-
-      comments.dispatchEvent(new Event('undangan.comment.done'));
+      comments.dispatchEvent(new Event("undangan.comment.done"));
       return res;
     };
 
