@@ -389,14 +389,6 @@ export const guest = (() => {
         theme.init();
         session.init();
 
-        if (session.isAdmin()) {
-            storage('user').clear();
-            storage('owns').clear();
-            storage('likes').clear();
-            storage('session').clear();
-            storage('comment').clear();
-        }
-
         document.addEventListener('DOMContentLoaded', domLoaded);
 
         return {
