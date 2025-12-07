@@ -54,7 +54,13 @@ export const util = (() => {
      */
     const notify = (message) => {
         const exec = (emoji) => {
-            window.alert(`${emoji} ${message}`);
+            // Reemplaza tu window.alert con esto:
+            Swal.fire({
+                text: message,
+                icon: 'success', // Opciones: 'success', 'error', 'warning', 'info'
+                confirmButtonText: 'Genial',
+                confirmButtonColor: '#3085d6', // Puedes poner el color de tu boda/marca
+            });
         };
 
         return {

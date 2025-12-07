@@ -352,33 +352,13 @@ export const guest = (() => {
             // add 2 progress for config and comment.
             // before img.load();
             progress.add();
-            progress.add();
+            img.load();
+            vid.load();
+            aud.load();
+            lib.load({ confetti: true });
 
-            // if don't have data-src.
-            if (!img.hasDataSrc()) {
-                img.load();
-            }
-
-            // fetch after document is loaded.
-            const load = () => session.guest(params.get('k') ?? token).then(({ data }) => {
-                document.dispatchEvent(new Event('undangan.session'));
-                progress.complete('config');
-
-                if (img.hasDataSrc()) {
-                    img.load();
-                }
-
-                vid.load();
-                aud.load();
-                lib.load({ confetti: data.is_confetti_animation });
-
-                comment.show()
-                    .then(() => progress.complete('comment'))
-                    .catch(() => progress.invalid('comment'));
-
-            }).catch(() => progress.invalid('config'));
-
-            window.addEventListener('load', load);
+            progress.complete('comment');
+            session.guest(params.get('k'));
         }
     };
 

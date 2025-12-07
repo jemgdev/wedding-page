@@ -1,15 +1,11 @@
 import { card } from "./card.js";
 import { like } from "./like.js";
 import { util } from "../../common/util.js";
-import { pagination } from "./pagination.js";
-import { dto } from "../../connection/dto.js";
 import { lang } from "../../common/language.js";
 import { storage } from "../../common/storage.js";
-import { session } from "../../common/session.js";
 import {
   request,
   HTTP_POST,
-  HTTP_DELETE,
   HTTP_STATUS_CREATED,
 } from "../../connection/request.js";
 
@@ -27,7 +23,7 @@ export const comment = (() => {
   /**
    * @type {HTMLElement|null}
    */
-  let comments = null;
+  const comments = null;
 
   /**
    * @type {string[]}
@@ -69,159 +65,6 @@ export const comment = (() => {
   };
 
   /**
-   * @returns {ReturnType<typeof dto.getCommentsResponse>}
-   */
-  const show = () => {
-    // remove all event listener.
-    lastRender.forEach((u) => {
-      like.removeListener(u);
-    });
-
-    console.log(
-      `/api/v2/comment?per=${pagination.getPer()}&next=${pagination.getNext()}&lang=${lang.getLanguage()}`
-    );
-
-    const data = {
-      data: {
-        count: 8967,
-        lists: [
-          {
-            uuid: "b92140d5-c030-4f02-a4e0-44899ad7d073",
-            name: "Trz",
-            presence: true,
-            comment: "Tez",
-            created_at: "4 hari yang lalu.",
-            like_count: 0,
-          },
-          {
-            uuid: "3caad11f-5961-47ac-bbae-1f02afece1c2",
-            name: "Ws",
-            presence: true,
-            comment: "Good",
-            created_at: "5 hari yang lalu.",
-            like_count: 3,
-          },
-          {
-            uuid: "3caad11f-5961-47ac-bbae-1f02afece1c3",
-            name: "Ws",
-            presence: true,
-            comment: "Good",
-            created_at: "5 hari yang lalu.",
-            like_count: 3,
-          },
-          {
-            uuid: "3caad11f-5961-47ac-bbae-1f02afece1c3",
-            name: "Ws",
-            presence: true,
-            comment: "Good",
-            created_at: "5 hari yang lalu.",
-            like_count: 3,
-          },
-          {
-            uuid: "3caad11f-5961-47ac-bbae-1f02afece1c3",
-            name: "Ws",
-            presence: true,
-            comment: "Good",
-            created_at: "5 hari yang lalu.",
-            like_count: 3,
-          },
-          {
-            uuid: "3caad11f-5961-47ac-bbae-1f02afece1c3",
-            name: "Ws",
-            presence: true,
-            comment: "Good",
-            created_at: "5 hari yang lalu.",
-            like_count: 3,
-          },
-          {
-            uuid: "3caad11f-5961-47ac-bbae-1f02afece1c3",
-            name: "Ws",
-            presence: true,
-            comment: "Good",
-            created_at: "5 hari yang lalu.",
-            like_count: 3,
-          },
-          {
-            uuid: "3caad11f-5961-47ac-bbae-1f02afece1c3",
-            name: "Ws",
-            presence: true,
-            comment: "Good",
-            created_at: "5 hari yang lalu.",
-            like_count: 3,
-          },
-          {
-            uuid: "3caad11f-5961-47ac-bbae-1f02afece1c3",
-            name: "Ws",
-            presence: true,
-            comment: "Good",
-            created_at: "5 hari yang lalu.",
-            like_count: 3,
-          },
-          {
-            uuid: "3caad11f-5961-47ac-bbae-1f02afece1c3",
-            name: "Ws",
-            presence: true,
-            comment: "Good",
-            created_at: "5 hari yang lalu.",
-            like_count: 3,
-          },
-        ],
-      },
-      error: null,
-    };
-
-    const render = async (res) => {
-      pagination.setTotal(res.data.count);
-      comments.setAttribute("data-loading", "false");
-      comments.dispatchEvent(new Event("undangan.comment.result"));
-      const data = await card.renderContentMany(res.data.lists);
-
-      util.safeInnerHTML(comments, data);
-
-      comments.dispatchEvent(new Event("undangan.comment.done"));
-      return res;
-    };
-
-    return render(data);
-  };
-
-  /**
-   * @param {HTMLButtonElement} button
-   * @returns {Promise<void>}
-   */
-  const remove = async (button) => {
-    if (!util.ask("Are you sure?")) {
-      return;
-    }
-
-    const id = button.getAttribute("data-uuid");
-
-    changeActionButton(id, true);
-    const btn = util.disableButton(button);
-    const likes = like.getButtonLike(id);
-    likes.disabled = true;
-
-    const status = await request(HTTP_DELETE, "/api/comment/" + owns.get(id))
-      .token(session.getToken())
-      .send(dto.statusResponse)
-      .then((res) => res.data.status);
-
-    if (!status) {
-      btn.restore();
-      likes.disabled = false;
-      changeActionButton(id, false);
-      return;
-    }
-
-    owns.unset(id);
-    document.getElementById(id).remove();
-
-    if (comments.children.length === 0) {
-      comments.innerHTML = onNullComment();
-    }
-  };
-
-  /**
    * @param {HTMLButtonElement} button
    * @returns {Promise<void>}
    */
@@ -229,11 +72,11 @@ export const comment = (() => {
     const id = button.getAttribute("data-uuid");
 
     const name = document.getElementById("form-name");
+    const comment = document.getElementById("form-comment");
     const nameValue = name.value;
-
+    const commentValue = comment.value;
     if (nameValue.length === 0) {
-      util.notify("Name cannot be empty.").warning();
-
+      util.notify("El nombre no puede estar vacío.").warning();
       if (id) {
         // scroll to form.
         name.scrollIntoView({ block: "center" });
@@ -242,31 +85,14 @@ export const comment = (() => {
     }
 
     const presence = document.getElementById("form-presence");
-    if (!id && presence && presence.value === "0") {
+    if (presence && presence.value === "0") {
       util.notify("Please select your attendance status.").warning();
       return;
-    }
-
-    const gifIsOpen = gif.isOpen(id ? id : gif.default);
-    const gifId = gif.getResultId(id ? id : gif.default);
-    const gifCancel = gif.buttonCancel(id);
-
-    if (gifIsOpen && !gifId) {
-      util.notify("Gif cannot be empty.").warning();
-      return;
-    }
-
-    if (gifIsOpen && gifId) {
-      gifCancel.hide();
     }
 
     const form = document.getElementById(
       `form-${id ? `inner-${id}` : "comment"}`
     );
-    if (!gifIsOpen && form.value?.trim().length === 0) {
-      util.notify("Comments cannot be empty.").warning();
-      return;
-    }
 
     if (!id && name) {
       name.disabled = true;
@@ -286,21 +112,13 @@ export const comment = (() => {
     const btn = util.disableButton(button);
     const isPresence = presence ? presence.value === "1" : true;
 
-    const response = await request(
-      HTTP_POST,
-      `/api/comment?lang=${lang.getLanguage()}`
-    )
-      .token(session.getToken())
-      .body(
-        dto.postCommentRequest(
-          id,
-          nameValue,
-          isPresence,
-          gifIsOpen ? null : form.value,
-          gifId
-        )
-      )
-      .send(dto.getCommentResponse);
+    const response = await request(HTTP_POST, `/dev/api/v1/comments`)
+      .body({
+        name: nameValue,
+        comment: commentValue,
+        presence: isPresence,
+      })
+      .send();
 
     if (name) {
       name.disabled = false;
@@ -318,48 +136,23 @@ export const comment = (() => {
       presence.disabled = false;
     }
 
-    if (gifIsOpen && gifId) {
-      gifCancel.show();
-    }
-
     btn.restore();
 
     if (!response || response.code !== HTTP_STATUS_CREATED) {
+      form.value = null;
+      name.value = null;
+      comment.value = null;
+      presence.value = "0";
       return;
     }
 
-    owns.set(response.data.uuid, response.data.own);
-
     if (form) {
       form.value = null;
+      name.value = null;
+      comment.value = null;
     }
 
-    if (gifIsOpen && gifId) {
-      gifCancel.click();
-    }
-
-    if (!id) {
-      if (pagination.reset()) {
-        await show();
-        comments.scrollIntoView();
-        return;
-      }
-
-      pagination.setTotal(pagination.geTotal() + 1);
-      if (comments.children.length === pagination.getPer()) {
-        comments.lastElementChild.remove();
-      }
-
-      response.data.is_parent = true;
-      comments.insertAdjacentHTML(
-        "afterbegin",
-        await card.renderContentMany([response.data])
-      );
-      comments.scrollIntoView();
-    }
-
-    like.addListener(response.data.uuid);
-    lastRender.push(response.data.uuid);
+    util.notify('Asistencia confirmada con éxito').success();
   };
 
   /**
@@ -427,10 +220,6 @@ export const comment = (() => {
   const init = () => {
     like.init();
     card.init();
-    pagination.init();
-
-    comments = document.getElementById("comments");
-    comments.addEventListener("undangan.comment.show", show);
 
     owns = storage("owns");
     showHide = storage("comment");
@@ -446,12 +235,9 @@ export const comment = (() => {
 
   return {
     like,
-    pagination,
     init,
     send,
     edit,
-    remove,
     cancel,
-    show,
   };
 })();

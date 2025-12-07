@@ -1,17 +1,9 @@
 export const dto = (() => {
 
-    /**
-     * @param {{ uuid: string, name: string, presence: boolean, comment: string|null, created_at: string, like_count: number }} data
-     * @returns {{ uuid: string, name: string, presence: boolean, comment: string|null, created_at: string, like_count: number }}
-     */
-    const getCommentResponse = ({ uuid, name, presence, comment, created_at, like_count }) => {
+    const getCommentResponse = ({ code, message }) => {
         return {
-            uuid,
-            name,
-            presence,
-            comment,
-            created_at,
-            like_count: like_count ?? 0,
+            code,
+            message
         };
     };
 
