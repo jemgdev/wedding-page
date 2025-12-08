@@ -1,67 +1,63 @@
-import { util } from './util.js';
-import { storage } from './storage.js';
-import { request, HTTP_GET, HTTP_STATUS_OK } from '../connection/request.js';
+import { util } from "./util.js";
+import { storage } from "./storage.js";
+import { request, HTTP_GET, HTTP_STATUS_OK } from "../connection/request.js";
 
 export const session = (() => {
+  /**
+   * @type {ReturnType<typeof storage>|null}
+   */
+  let ses = null;
 
-    /**
-     * @type {ReturnType<typeof storage>|null}
-     */
-    let ses = null;
+  /**
+   * @returns {string|null}
+   */
+  const getToken = () => ses.get("token");
 
-    /**
-     * @returns {string|null}
-     */
-    const getToken = () => ses.get('token');
+  /**
+   * @param {string} token
+   * @returns {void}
+   */
+  const setToken = (token) => ses.set("token", token);
 
-    /**
-     * @param {string} token
-     * @returns {void}
-     */
-    const setToken = (token) => ses.set('token', token);
+  /**
+   * @param {string} token
+   * @returns {Promise<object>}
+   */
+  const guest = (token) => {
+    const config = storage("config");
 
-    /**
-     * @param {string} token
-     * @returns {Promise<object>}
-     */
-    const guest = (token) => {
-        const config = storage('config');
+    for (const [k, v] of Object.entries({
+      tz: "America/Lima",
+      can_edit: true,
+      can_delete: true,
+      can_reply: true,
+      is_confetti_animation: true,
+    })) {
+      config.set(k, v);
+    }
 
-                for (const [k, v] of Object.entries({
-                    "tz": "Asia/Jakarta",
-                    "can_edit": true,
-                    "can_delete": true,
-                    "can_reply": true,
-                    "tenor_key": "AIzaSyAfdtnqZhgdyVEUhNVa3cF9uZY7ayBA9g4",
-                    "is_confetti_animation": true
-                })) {
-                    config.set(k, v);
-                }
+    setToken(token);
+  };
 
-                setToken(token);
-    };
+  /**
+   * @returns {object|null}
+   */
+  const decode = () => {
+    return null;
+  };
 
-    /**
-     * @returns {object|null}
-     */
-    const decode = () => {
-            return null;
-        
+  /**
+   * @returns {void}
+   */
+  const init = () => {
+    ses = storage("session");
+  };
 
-    };
-
-    /**
-     * @returns {void}
-     */
-    const init = () => {
-        ses = storage('session');
-    };
-
-    return {
-        init,
-        guest,
-        decode,
-        setToken,
-        getToken,
-    };
+  return {
+    init,
+    guest,
+    decode,
+    setToken,
+    getToken,
+  };
 })();

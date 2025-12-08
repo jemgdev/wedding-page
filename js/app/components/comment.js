@@ -1,5 +1,4 @@
 import { card } from "./card.js";
-import { like } from "./like.js";
 import { util } from "../../common/util.js";
 import { lang } from "../../common/language.js";
 import { storage } from "../../common/storage.js";
@@ -218,7 +217,6 @@ export const comment = (() => {
    * @returns {void}
    */
   const init = () => {
-    like.init();
     card.init();
 
     owns = storage("owns");
@@ -234,7 +232,6 @@ export const comment = (() => {
   };
 
   return {
-    like,
     init,
     send,
     edit,

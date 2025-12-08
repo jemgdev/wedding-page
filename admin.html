@@ -1,0 +1,516 @@
+<!doctype html>
+<html lang="es" data-bs-theme="light">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Administración - Boda Josué y Valentina</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin="anonymous">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Josefin+Sans&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sacramento&display=swap">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css"
+    integrity="sha256-zRgmWB5PK4CvTx4FiXsxbHaYRBBjz/rvu97sOC7kzXI=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.7.2/css/all.min.css"
+    integrity="sha256-dABdfBfUoC8vJUBOwGVdm8L9qlMWaHTIfXt+7GnZCIo=" crossorigin="anonymous">
+
+  <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"
+    integrity="sha256-NfRUfZNkERrKSFA0c1a8VmCplPDYtpTYj5lQmKe1R/o=" crossorigin="anonymous"></script>
+
+  <style>
+    :root {
+      --bg-light: #ffffff;
+      --bg-dark: #1a1a1a;
+      --text-light: #000000;
+      --text-dark: #ffffff;
+      --primary-color: #d4a373;
+      --secondary-color: #8b7355;
+    }
+
+    [data-bs-theme="dark"] {
+      --bs-body-bg: var(--bg-dark);
+      --bs-body-color: var(--text-dark);
+    }
+
+    [data-bs-theme="light"] {
+      --bs-body-bg: var(--bg-light);
+      --bs-body-color: var(--text-light);
+    }
+
+    body {
+      font-family: 'Josefin Sans', sans-serif;
+      min-height: 100vh;
+      background: var(--bs-body-bg);
+      color: var(--bs-body-color);
+    }
+
+    .font-esthetic {
+      font-family: 'Sacramento', cursive;
+    }
+
+    .bg-overlay {
+      background: rgba(0, 0, 0, 0.5);
+    }
+
+    .card-custom {
+      background: var(--bs-body-bg);
+      border: 1px solid rgba(128, 128, 128, 0.2);
+      transition: transform 0.3s ease;
+    }
+
+    .card-custom:hover {
+      transform: translateY(-5px);
+    }
+
+    .btn-primary-custom {
+      background: var(--primary-color);
+      border: none;
+      color: white;
+    }
+
+    .btn-primary-custom:hover {
+      background: var(--secondary-color);
+      color: white;
+    }
+
+    .table-custom {
+      background: var(--bs-body-bg);
+    }
+
+    .badge-asistire {
+      background: #28a745;
+    }
+
+    .badge-no-asistire {
+      background: #dc3545;
+    }
+
+    .badge-pendiente {
+      background: #ffc107;
+      color: #000;
+    }
+
+    .login-container {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+    }
+
+    .admin-header {
+      background: var(--primary-color);
+      color: white;
+      padding: 1.5rem 0;
+      margin-bottom: 2rem;
+    }
+
+    .stats-card {
+      border-left: 4px solid var(--primary-color);
+    }
+
+    .search-box {
+      max-width: 400px;
+    }
+
+    @media (max-width: 768px) {
+      .table-responsive {
+        font-size: 0.875rem;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Login Page -->
+  <div id="login-page" class="login-container">
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-md-5 col-lg-4">
+          <div class="card shadow-lg border-0 rounded-4">
+            <div class="card-body p-5">
+              <div class="text-center mb-4">
+                <h1 class="font-esthetic mb-3" style="font-size: 2.5rem; color: var(--primary-color);">Josué & Valentina
+                </h1>
+                <h5 class="mb-4">Panel Administrativo</h5>
+              </div>
+
+              <form id="login-form">
+                <div class="mb-3">
+                  <label for="username" class="form-label">
+                    <i class="fa-solid fa-user me-2"></i>Usuario
+                  </label>
+                  <input type="text" class="form-control rounded-3" id="username" placeholder="Ingrese usuario"
+                    required>
+                </div>
+
+                <div class="mb-4">
+                  <label for="password" class="form-label">
+                    <i class="fa-solid fa-lock me-2"></i>Contraseña
+                  </label>
+                  <input type="password" class="form-control rounded-3" id="password" placeholder="Ingrese contraseña"
+                    required>
+                </div>
+
+                <div class="d-grid">
+                  <button type="submit" class="btn btn-primary-custom btn-lg rounded-3">
+                    <i class="fa-solid fa-right-to-bracket me-2"></i>Iniciar Sesión
+                  </button>
+                </div>
+              </form>
+
+              <div class="alert alert-danger mt-3 d-none" id="login-error" role="alert">
+                <i class="fa-solid fa-triangle-exclamation me-2"></i>
+                <span id="error-message">Usuario o contraseña incorrectos</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Admin Dashboard -->
+  <div id="admin-dashboard" class="d-none">
+    <!-- Header -->
+    <div class="admin-header">
+      <div class="container">
+        <div class="d-flex justify-content-between align-items-center">
+          <div>
+            <h2 class="font-esthetic mb-0" style="font-size: 2rem;">Panel de Administración</h2>
+            <p class="mb-0">Boda Josué & Valentina</p>
+          </div>
+          <div class="d-flex gap-2">
+            <button class="btn btn-light btn-sm rounded-3" onclick="toggleTheme()">
+              <i class="fa-solid fa-circle-half-stroke"></i>
+            </button>
+            <button class="btn btn-outline-light btn-sm rounded-3" onclick="logout()">
+              <i class="fa-solid fa-right-from-bracket me-2"></i>Salir
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="container pb-5">
+      <!-- Statistics Cards -->
+      <div class="row mb-4">
+        <div class="col-md-3 col-sm-6 mb-3">
+          <div class="card card-custom stats-card shadow-sm">
+            <div class="card-body">
+              <div class="d-flex justify-content-between align-items-center">
+                <div>
+                  <h6 class="text-muted mb-2">Total Respuestas</h6>
+                  <h3 class="mb-0" id="total-responses">0</h3>
+                </div>
+                <div class="text-primary" style="font-size: 2rem;">
+                  <i class="fa-solid fa-users"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-3 col-sm-6 mb-3">
+          <div class="card card-custom stats-card shadow-sm">
+            <div class="card-body">
+              <div class="d-flex justify-content-between align-items-center">
+                <div>
+                  <h6 class="text-muted mb-2">Asistirán</h6>
+                  <h3 class="mb-0 text-success" id="total-attending">0</h3>
+                </div>
+                <div class="text-success" style="font-size: 2rem;">
+                  <i class="fa-solid fa-check-circle"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-3 col-sm-6 mb-3">
+          <div class="card card-custom stats-card shadow-sm">
+            <div class="card-body">
+              <div class="d-flex justify-content-between align-items-center">
+                <div>
+                  <h6 class="text-muted mb-2">No Asistirán</h6>
+                  <h3 class="mb-0 text-danger" id="total-not-attending">0</h3>
+                </div>
+                <div class="text-danger" style="font-size: 2rem;">
+                  <i class="fa-solid fa-times-circle"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Filters and Search -->
+      <div class="card card-custom shadow-sm mb-4">
+        <div class="card-body">
+          <div class="row align-items-center">
+            <div class="col-md-4 mb-3 mb-md-0">
+              <div class="search-box">
+                <div class="input-group">
+                  <span class="input-group-text bg-transparent">
+                    <i class="fa-solid fa-search"></i>
+                  </span>
+                  <input type="text" class="form-control" id="search-input" placeholder="Buscar por nombre...">
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4 mb-3 mb-md-0">
+              <select class="form-select" id="filter-status">
+                <option value="all">Todos los estados</option>
+                <option value="1">✅ Asistirán</option>
+                <option value="2">❌ No asistirán</option>
+              </select>
+            </div>
+            <div class="col-md-4 text-md-end">
+              <button class="btn btn-primary-custom rounded-3" onclick="exportToCSV()">
+                <i class="fa-solid fa-download me-2"></i>Exportar CSV
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Attendance List -->
+      <div class="card card-custom shadow-sm">
+        <div class="card-body">
+          <h5 class="card-title mb-4">
+            <i class="fa-solid fa-list me-2"></i>Lista de Asistencias
+          </h5>
+
+          <div class="table-responsive">
+            <table class="table table-hover table-custom">
+              <thead>
+                <tr>
+                  <th style="width: 5%;">#</th>
+                  <th style="width: 25%;">Nombre</th>
+                  <th style="width: 15%;">Estado</th>
+                  <th style="width: 40%;">Comentario</th>
+                  <th style="width: 15%;">Fecha de confirmación</th>
+                </tr>
+              </thead>
+              <tbody id="attendance-table-body">
+                <!-- Data will be inserted here -->
+              </tbody>
+            </table>
+          </div>
+
+          <div class="text-center py-5 d-none" id="no-data-message">
+            <i class="fa-solid fa-inbox fa-3x text-muted mb-3"></i>
+            <p class="text-muted">No hay datos para mostrar</p>
+          </div>
+
+          <div class="text-center py-5 d-none" id="loading-message">
+            <div class="spinner-border text-primary" role="status">
+              <span class="visually-hidden">Cargando...</span>
+            </div>
+            <p class="text-muted mt-3">Cargando datos...</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    if (window.localStorage.getItem('authToken') && window.localStorage.getItem('idToken')) {
+      document.getElementById('login-page').classList.add('d-none');
+      document.getElementById('admin-dashboard').classList.remove('d-none');
+      (async () => {
+        const token = window.localStorage.getItem('authToken');
+        const idToken = window.localStorage.getItem('idToken');
+        await generateSampleData(token, idToken);
+        updateDashboard();
+      })();
+    }
+
+    // Datos de ejemplo simulados
+    let attendanceData = [];
+    let filteredData = [];
+
+    async function getAuthToken(email, password) {
+      const response = await fetch('https://wbag6rvlcd.execute-api.us-east-1.amazonaws.com/dev/api/v1/signin', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          email,
+          password
+        })
+      });
+
+      const data = await response.json();
+      return {
+        token: data.data.accessToken,
+        idToken: data.data.idToken
+      };
+    }
+
+    // Generar datos de ejemplo
+    async function generateSampleData(token, idToken) {
+      const response = await fetch('https://wbag6rvlcd.execute-api.us-east-1.amazonaws.com/dev/api/v1/comments?take=200', {
+        method: 'GET',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Id-Token': idToken
+        }
+      })
+
+      const data = await response.json()
+
+      const comments = data.data.comments
+
+      attendanceData = comments.map((comment, i) => ({
+        id: i + 1,
+        name: comment.name,
+        status: comment.presence ? 1 : 2,
+        comment: comment.comment,
+        date: new Date(comment.createdAt).toLocaleString('es-ES')
+      }));
+
+      filteredData = [...attendanceData];
+    }
+
+    // Login
+    document.getElementById('login-form').addEventListener('submit', async function (e) {
+      e.preventDefault();
+      const username = document.getElementById('username').value;
+      const password = document.getElementById('password').value;
+
+      const { token, idToken } = await getAuthToken(username, password);
+
+      if (token && idToken) {
+        window.localStorage.setItem('authToken', token);
+        window.localStorage.setItem('idToken', idToken);
+        document.getElementById('login-page').classList.add('d-none');
+        document.getElementById('admin-dashboard').classList.remove('d-none');
+        await generateSampleData(token, idToken);
+        updateDashboard();
+      } else {
+        const errorDiv = document.getElementById('login-error');
+        errorDiv.classList.remove('d-none');
+        setTimeout(() => errorDiv.classList.add('d-none'), 3000);
+      }
+    });
+
+    // Logout
+    function logout() {
+      document.getElementById('login-page').classList.remove('d-none');
+      document.getElementById('admin-dashboard').classList.add('d-none');
+      document.getElementById('username').value = '';
+      document.getElementById('password').value = '';
+      window.localStorage.removeItem('authToken');
+      window.localStorage.removeItem('idToken');
+    }
+
+    // Toggle Theme
+    function toggleTheme() {
+      const html = document.documentElement;
+      const currentTheme = html.getAttribute('data-bs-theme');
+      html.setAttribute('data-bs-theme', currentTheme === 'light' ? 'dark' : 'light');
+    }
+
+    // Update Statistics
+    function updateStats() {
+      const total = attendanceData.length;
+      const attending = attendanceData.filter(d => d.status === 1).length;
+      const notAttending = attendanceData.filter(d => d.status === 2).length;
+
+      document.getElementById('total-responses').textContent = total;
+      document.getElementById('total-attending').textContent = attending;
+      document.getElementById('total-not-attending').textContent = notAttending;
+    }
+
+    // Render Table
+    function renderTable() {
+      const tbody = document.getElementById('attendance-table-body');
+      const noDataMsg = document.getElementById('no-data-message');
+
+      tbody.innerHTML = '';
+
+      if (filteredData.length === 0) {
+        noDataMsg.classList.remove('d-none');
+        return;
+      }
+
+      noDataMsg.classList.add('d-none');
+
+      filteredData.forEach((item, index) => {
+        const statusBadge = item.status === 1
+          ? '<span class="badge badge-asistire">✅ Asistirá</span>'
+          : item.status === 2
+            ? '<span class="badge badge-no-asistire">❌ No asistirá</span>'
+            : '<span class="badge badge-pendiente">⏳ Pendiente</span>';
+
+        const row = `
+          <tr>
+            <td>${index + 1}</td>
+            <td><strong>${item.name}</strong></td>
+            <td>${statusBadge}</td>
+            <td><small>${item.comment || '<em class="text-muted">Sin comentario</em>'}</small></td>
+            <td><small class="text-muted">${item.date}</small></td>
+          </tr>
+        `;
+        tbody.innerHTML += row;
+      });
+    }
+
+    // Filter Data
+    function filterData() {
+      const searchTerm = document.getElementById('search-input').value.toLowerCase();
+      const statusFilter = document.getElementById('filter-status').value;
+
+      filteredData = attendanceData.filter(item => {
+        const matchesSearch = item.name.toLowerCase().includes(searchTerm);
+        const matchesStatus = statusFilter === 'all' || item.status === parseInt(statusFilter);
+        return matchesSearch && matchesStatus;
+      });
+
+      renderTable();
+    }
+
+    // Event Listeners for Filters
+    document.getElementById('search-input').addEventListener('input', filterData);
+    document.getElementById('filter-status').addEventListener('change', filterData);
+
+    // Export to CSV
+    function exportToCSV() {
+      const headers = ['#', 'Nombre', 'Estado', 'Comentario', 'Fecha'];
+      const rows = filteredData.map((item, i) => [
+        i + 1,
+        item.name,
+        item.status === 1 ? 'Asistirá' : item.status === 2 ? 'No asistirá' : 'Pendiente',
+        item.comment || 'Sin comentario',
+        item.date
+      ]);
+
+      let csvContent = headers.join(',') + '\n';
+      rows.forEach(row => {
+        csvContent += row.map(cell => `"${cell}"`).join(',') + '\n';
+      });
+
+      const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+      const link = document.createElement('a');
+      const url = URL.createObjectURL(blob);
+      link.setAttribute('href', url);
+      link.setAttribute('download', 'asistencias_boda.csv');
+      link.style.visibility = 'hidden';
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    }
+
+    // Update Dashboard
+    function updateDashboard() {
+      updateStats();
+      renderTable();
+    }
+  </script>
+</body>
+
+</html>
