@@ -4,6 +4,11 @@
 html {
     scrollbar-width: none !important;
     -ms-overflow-style: none !important;
+    font-size: 120%;
+}
+
+body {
+    font-size: 1rem;
 }
 
 .with-scrollbar {
